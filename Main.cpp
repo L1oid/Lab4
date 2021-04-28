@@ -166,15 +166,14 @@ void MyQueue::Info()
 
 bool InputBinaryFile(MyQueue&);
 void GetPen(MyQueue&, PenInfo&);
-bool RemovePen(MyQueue&, PenInfo&, string);
+bool RemovePen(MyQueue&, PenInfo&);
 
 void main()
 {
 	PenInfo Info;
 	MyQueue Queue;
-	string title;
-	int ssize, key = 0;
-	char* data;
+	int key = 0;
+	char* data; int ssize;
 	InputBinaryFile(Queue);
 	do
 	{
@@ -208,9 +207,19 @@ void main()
 			delete[] data;
 			break;
 		case 2:
-			cout << "Enter the title of the pen: ";
-			cin >> title;
-			RemovePen(Queue, Info, title);
+			cout << "Enter the title: ";
+			cin >> Info.pen;
+			cout << endl;
+			cout << "Enter the price: ";
+			cin >> Info.price;
+			cout << endl;
+			cout << "Enter the rating: ";
+			cin >> Info.rating;
+			cout << endl;
+			cout << "Enter the year: ";
+			cin >> Info.year;
+			cout << endl;
+			RemovePen(Queue, Info);
 			Queue.Info();
 			break;
 		case 3:
@@ -276,7 +285,7 @@ bool InputBinaryFile(MyQueue& Queue)
 	{
 		if (in.read((char*)&n, sizeof(int)))
 		{
-			cout << "\t - " << i << " - " << " seria length : " << n << endl << endl;
+			cout << i << ")" << " Seria length: " << n << endl << endl;
 			char* data = new char[n];
 			in.read(data, n);
 			i++;
@@ -290,16 +299,17 @@ bool InputBinaryFile(MyQueue& Queue)
 	return true;
 }
 
-bool RemovePen(MyQueue& Queue, PenInfo& Info, string title)
+bool RemovePen(MyQueue& Queue, PenInfo& TempInfo)
 {
 	MyQueue QueueTemp;
+	PenInfo Info;
 	char* data = NULL;
 	int n;
 	bool stopFind = false, find = false;
 	while (stopFind == false)
 	{
 		Info = DeSeria(Queue.First->data, Queue.First->n);
-		if (Info.pen == title)
+		if ((Info.pen == TempInfo.pen) && (Info.price == TempInfo.price) && (Info.rating == TempInfo.rating) && (Info.year == TempInfo.year))
 		{
 			Queue.Pop(data, n);
 			while (Queue.First != NULL)
@@ -321,11 +331,11 @@ bool RemovePen(MyQueue& Queue, PenInfo& Info, string title)
 	}
 	if (find == true)
 	{
-		cout << endl << "Succesfuly remove " << title << " named object!" << endl << endl;
+		cout << endl << "Succesfuly remove pen!" << endl << endl;
 	}
 	else
 	{
-		cout << endl << "Can't find " << title << " named object!" << endl << endl;
+		cout << endl << "Can't find pen!" << endl << endl;
 	}
 	stopFind = false;
 	while (stopFind == false)
