@@ -18,22 +18,6 @@ void PenInfo::Out()
 	cout << "Pen: " << pen << "\t" << "Price: " << price << "\t" << "Rating: " << rating << "\t" << "Year: " << year << endl << endl;
 }
 
-PenInfo DeSeria(char* data, int n);
-
-void ClearBinaryFile()
-{
-	fstream out("out.dat", ios::out | ios::binary);
-	out.close();
-}
-
-void PrintBinaryFile(char* data, int n) 
-{
-	fstream out("out.dat", ios::app | ios::binary);
-	out.write((char*)&n, sizeof(int));
-	out.write(data, n);
-	out.close();
-}
-
 bool PenInfo::Seria(char*& data, int& n)
 {
 	size_t s = pen.size();
@@ -164,6 +148,9 @@ void MyQueue::Info()
 	}
 }
 
+PenInfo DeSeria(char*, int);
+void PrintBinaryFile(char*, int);
+void ClearBinaryFile();
 bool InputBinaryFile(MyQueue&);
 void GetPen(MyQueue&, PenInfo&);
 bool RemovePen(MyQueue&, PenInfo&);
@@ -182,6 +169,7 @@ void main()
 			<< "3) Empty Cart" << endl
 			<< "4) Cart Info" << endl
 			<< "5) Seria Data" << endl
+			<< "6) Clear File" << endl
 			<< "0) Exit" << endl;
 		cout << endl << "Select an action: ";
 		cin >> key;
@@ -251,6 +239,10 @@ void main()
 			PrintBinaryFile(data, ssize);
 			delete[] data;
 			break;
+		case 6:
+			ClearBinaryFile();
+			cout << "File is clear" << endl;
+			break;
 		default:
 			if (key != 0)
 			{
@@ -267,6 +259,20 @@ void main()
 			break;
 		}
 	} while (key != 0);
+}
+
+void PrintBinaryFile(char* data, int n)
+{
+	fstream out("out.dat", ios::app | ios::binary);
+	out.write((char*)&n, sizeof(int));
+	out.write(data, n);
+	out.close();
+}
+
+void ClearBinaryFile()
+{
+	fstream out("out.dat", ios::out | ios::binary);
+	out.close();
 }
 
 bool InputBinaryFile(MyQueue& Queue)
