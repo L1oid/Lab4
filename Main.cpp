@@ -312,11 +312,6 @@ bool RemovePen(MyQueue& Queue, PenInfo& TempInfo)
 		if ((Info.pen == TempInfo.pen) && (Info.price == TempInfo.price) && (Info.rating == TempInfo.rating) && (Info.year == TempInfo.year))
 		{
 			Queue.Pop(data, n);
-			while (Queue.First != NULL)
-			{
-				QueueTemp.Push(Queue.First->data, Queue.First->n);
-				Queue.Pop(data, n);
-			}
 			find = true;
 			stopFind = true;
 			break;
