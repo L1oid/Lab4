@@ -320,10 +320,12 @@ bool RemovePen(MyQueue& Queue, PenInfo& TempInfo)
 			Queue.Pop(data, n);
 			find = true;
 			stopFind = true;
+			delete[] data;
 			break;
 		}
 		QueueTemp.Push(Queue.First->data, Queue.First->n);
 		Queue.Pop(data, n);
+		delete[] data;
 		if (Queue.First == NULL)
 		{
 			stopFind = true;
@@ -345,11 +347,11 @@ bool RemovePen(MyQueue& Queue, PenInfo& TempInfo)
 		{
 			Queue.Push(QueueTemp.First->data, QueueTemp.First->n);
 			QueueTemp.Pop(data, n);
+			delete[] data;
 		}
 		find = false;
 		if (QueueTemp.First == NULL) stopFind = true;
 	}
 	find = false;
-	delete[] data;
 	return true;
 }
